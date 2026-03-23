@@ -82,10 +82,10 @@ public class AgentContextHolder {
     private static final String JA_NETFILTER_FILE_PATH = "external/agent/ja-netfilter";
 
     /** POWER配置文件路径 */
-    private static final String POWER_CONF_FILE_NAME = JA_NETFILTER_FILE_PATH + "/config/power.conf";
+    private static final String POWER_CONF_FILE_NAME = JA_NETFILTER_FILE_PATH + "/config-jetbrains/power.conf";
 
     /** XBASE64配置文件路径 */
-    private static final String XBASE64_CONF_FILE_NAME = JA_NETFILTER_FILE_PATH + "/config/xbase64.conf";
+    private static final String XBASE64_CONF_FILE_NAME = JA_NETFILTER_FILE_PATH + "/config-jetbrains/xbase64.conf";
 
     // ==================== 静态字段 ====================
     
