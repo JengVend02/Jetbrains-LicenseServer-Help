@@ -18,5 +18,5 @@ ENV XBASE64_DOMAIN=mihuyo.cc
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # 暴露端口（匹配 docker-compose 中的端口映射）
 EXPOSE 10768
-# 启动命令（保持原有逻辑）
-ENTRYPOINT ["java", "-jar", "Jetbrains-LicenseServer-Help.jar"]
+# 启动命令（添加 JVM 内存限制）
+ENTRYPOINT ["java", "-Xms128m", "-Xmx256m", "-jar", "Jetbrains-LicenseServer-Help.jar"]
