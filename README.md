@@ -8,6 +8,10 @@
 
 ## 📚 文档导航
 
+### 语言切换
+- [中文文档](docs/zh_CN/README.md)
+- [English Documentation](docs/en_US/README.md)
+
 ### 中文文档
 - [项目概述](docs/zh_CN/README.md#项目概述)
 - [核心功能](docs/zh_CN/README.md#核心功能)
@@ -19,22 +23,6 @@
 - [贡献指南](docs/zh_CN/README.md#贡献指南)
 - [常见问题](docs/zh_CN/README.md#常见问题)
 - [许可证信息](docs/zh_CN/README.md#许可证信息)
-
-### 英文文档
-- [Project Overview](docs/en_US/README.md#project-overview)
-- [Core Features](docs/en_US/README.md#core-features)
-- [Technology Stack](docs/en_US/README.md#technology-stack)
-- [Environment Configuration](docs/en_US/README.md#environment-configuration)
-- [Installation and Deployment](docs/en_US/README.md#installation-and-deployment)
-- [Usage Instructions](docs/en_US/README.md#usage-instructions)
-- [API Documentation](docs/en_US/README.md#api-documentation)
-- [Contributing Guide](docs/en_US/README.md#contributing-guide)
-- [Frequently Asked Questions](docs/en_US/README.md#frequently-asked-questions)
-- [License Information](docs/en_US/README.md#license-information)
-
-### 语言切换
-- [中文文档](docs/zh_CN/README.md)
-- [English Documentation](docs/en_US/README.md)
 
 ## ✨ 核心功能
 
