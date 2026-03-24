@@ -109,7 +109,7 @@ public class CertificateContextHolder {
     private static final String APP_SUBJECT_DN = "CN=Jetbrains-Help";
 
     /** 许可证服务器域名 */
-    private static final String LICENSE_SERVER_DOMAIN = "activate.jetbrains.zoyopo.cn";
+    private static final String LICENSE_SERVER_DOMAIN = "jetbrains.zoyopo.cn";
 
     /** 许可证服务器主体DN */
     private static final String LICENSE_SERVER_SUBJECT_DN = "CN=" + LICENSE_SERVER_DOMAIN;
