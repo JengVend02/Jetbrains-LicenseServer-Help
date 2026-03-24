@@ -117,6 +117,22 @@ public class AgentContextHolder {
         return AgentContextHolder.jaNetfilterZipFile;
     }
 
+    /**
+     * 获取 power.conf 文件内容
+     *
+     * @return power.conf 文件内容
+     */
+    public static String getPowerConfContent() {
+        File powerConfFile = FileTools.getFileOrCreat(POWER_CONF_FILE_NAME);
+        String powerConfStr;
+        try {
+            powerConfStr = IoUtil.readUtf8(FileUtil.getInputStream(powerConfFile));
+        } catch (IORuntimeException e) {
+            throw new IllegalArgumentException(CharSequenceUtil.format("{} 文件读取失败!", POWER_CONF_FILE_NAME), e);
+        }
+        return powerConfStr;
+    }
+
     private static void unzipJaNetfilter() {
         jaNetfilterFile = ZipUtil.unzip(jaNetfilterZipFile);
     }
@@ -126,14 +142,7 @@ public class AgentContextHolder {
     }
 
     private static boolean powerConfHasInit() {
-        File powerConfFile = FileTools.getFileOrCreat(POWER_CONF_FILE_NAME);
-        String powerConfStr;
-        try {
-            powerConfStr = IoUtil.readUtf8(FileUtil.getInputStream(powerConfFile));
-        } catch (IORuntimeException e) {
-            throw new IllegalArgumentException(CharSequenceUtil.format("{} 文件读取失败!", POWER_CONF_FILE_NAME), e);
-        }
-        return CharSequenceUtil.containsAll(powerConfStr, "[Result]", "EQUAL,");
+        return CharSequenceUtil.containsAll(getPowerConfContent(), "[Result]", "EQUAL,");
     }
 
     private static void loadPowerConf() {
