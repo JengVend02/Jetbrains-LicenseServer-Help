@@ -5,10 +5,12 @@ const { createApp } = Vue
 const App = {
   data() {
     return {
-      currentPage: Utils.getCurrentPage(), // 从URL获取当前页面
+      currentPage: Utils.getCurrentPage(),
       showConfigModal: false,
       showLicenseModal: false,
       showResultModal: false,
+      showPowerConfModal: false,
+      powerConfContent: '',
       isGenerating: false,
       config: {
         licenseName: '',
@@ -30,8 +32,7 @@ const App = {
         { id: 'home', name: '首页', icon: 'fas fa-home' },
         { id: 'products', name: '产品', icon: 'fas fa-cube' },
         { id: 'plugins', name: '插件', icon: 'fas fa-puzzle-piece' },
-        { id: 'jrebel', name: 'JRebel', icon: 'fas fa-fire' }/*,
-        { id: 'sponsor', name: '赞助', icon: 'fas fa-heart' }*/
+        { id: 'jrebel', name: 'JRebel', icon: 'fas fa-fire' }
       ],
       showBackToTop: false
     }
@@ -55,7 +56,6 @@ const App = {
 
     currentPage() {
       this.searchQuery = ''
-      // 重置过滤结果
       this.filteredProducts = [...this.products]
       this.filteredPlugins = [...this.plugins]
     }
@@ -66,41 +66,30 @@ const App = {
     this.loadProducts()
     this.loadPlugins()
     this.setDefaultExpiryDate()
-
-    // 加载主题设置
     Utils.loadTheme()
 
-    // 监听路由变化
     this.handleHashChange = () => {
       this.currentPage = Utils.getCurrentPage()
       this.searchQuery = ''
-      // 重置过滤结果
       this.filteredProducts = [...this.products]
       this.filteredPlugins = [...this.plugins]
     }
 
     Utils.onHashChange(this.handleHashChange)
 
-    // 监听滚动事件
     const handleScroll = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
       this.showBackToTop = scrollTop > 300
     }
 
-    // 监听滚动事件
     window.addEventListener('scroll', handleScroll)
-
-    // 保存函数引用以便清理
     this._handleScroll = handleScroll
   },
 
   beforeUnmount() {
-    // 清理路由监听器
     if (this.handleHashChange) {
       Utils.removeHashChangeListener(this.handleHashChange)
     }
-
-    // 清理滚动事件监听器
     if (this._handleScroll) {
       window.removeEventListener('scroll', this._handleScroll)
       document.removeEventListener('scroll', this._handleScroll)
@@ -108,7 +97,6 @@ const App = {
   },
 
   methods: {
-    // 配置相关
     loadConfig() {
       const config = StorageService.getConfig()
       if (StorageService.isConfigured()) {
@@ -126,7 +114,6 @@ const App = {
       }
     },
 
-    // 数据加载
     async loadProducts() {
       try {
         this.products = await ApiService.getProducts()
@@ -147,7 +134,6 @@ const App = {
       }
     },
 
-    // 搜索功能
     filterItems(query) {
       const searchTerm = query.toLowerCase().trim()
 
@@ -158,7 +144,6 @@ const App = {
           const codeMatch = product.productCode && product.productCode.toLowerCase().includes(searchTerm)
           return nameMatch || descriptionMatch || codeMatch
         })
-        // 按匹配度排序
         this.filteredProducts.sort((a, b) => {
           const aScore = this.calculateSearchScore(a, searchTerm)
           const bScore = this.calculateSearchScore(b, searchTerm)
@@ -171,7 +156,6 @@ const App = {
           const idMatch = plugin.id && plugin.id.toLowerCase().includes(searchTerm)
           return nameMatch || descriptionMatch || idMatch
         })
-        // 按匹配度排序
         this.filteredPlugins.sort((a, b) => {
           const aScore = this.calculateSearchScore(a, searchTerm)
           const bScore = this.calculateSearchScore(b, searchTerm)
@@ -180,11 +164,8 @@ const App = {
       }
     },
 
-    // 计算搜索匹配分数
     calculateSearchScore(item, searchTerm) {
       let score = 0
-      
-      // 精确匹配名称权重最高
       if (item.name.toLowerCase() === searchTerm) {
         score += 100
       } else if (item.name.toLowerCase().startsWith(searchTerm)) {
@@ -192,22 +173,16 @@ const App = {
       } else if (item.name.toLowerCase().includes(searchTerm)) {
         score += 30
       }
-      
-      // 匹配描述权重次之
       if (item.description && item.description.toLowerCase().includes(searchTerm)) {
         score += 20
       }
-      
-      // 匹配代码/ID权重最低
       if ((item.productCode && item.productCode.toLowerCase().includes(searchTerm)) ||
           (item.id && item.id.toLowerCase().includes(searchTerm))) {
         score += 10
       }
-      
       return score
     },
 
-    // 选择产品/插件
     selectProduct(product) {
       this.selectedItem = product
       this.showLicenseModal = true
@@ -218,17 +193,14 @@ const App = {
       this.showLicenseModal = true
     },
 
-    // 设置到期日期
     setExpiryDate(days) {
       const date = new Date()
       date.setDate(date.getDate() + parseInt(days))
       this.licenseConfig.expiryDate = date.toISOString().split('T')[0]
     },
 
-    // 生成激活码
     async generateLicense() {
       this.isGenerating = true
-
       try {
         const result = await ApiService.generateLicense(this.selectedItem.productCode, this.config.licenseName, this.config.assigneeName, this.licenseConfig.expiryDate)
         this.generatedLicense = result
@@ -242,7 +214,20 @@ const App = {
       }
     },
 
-    // 工具方法
+    async viewPowerConf() {
+      try {
+        const response = await fetch(`${ApiService.baseURL}/power-conf`)
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        this.powerConfContent = await response.text()
+        this.showPowerConfModal = true
+      } catch (error) {
+        console.error('获取 power.conf 失败:', error)
+        Utils.showNotification('获取配置文件失败', 'error')
+      }
+    },
+
     downloadAgent() {
       ApiService.downloadAgent()
     },
@@ -255,12 +240,9 @@ const App = {
       this.licenseConfig.expiryDate = Utils.getDefaultExpiryDate()
     },
 
-    // 图标处理
     getProductIcon(product) {
       if (product.iconClass && product.iconClass.startsWith('icon-')) {
         const iconName = product.iconClass.replace('icon-', '');
-
-        // 图标映射表
         const iconMap = {
           'ii': 'https://resources.jetbrains.com/storage/logos/web/intellij-idea/intellij-idea.svg',
           'ps': 'https://resources.jetbrains.com/storage/logos/web/phpstorm/phpstorm.svg',
@@ -280,7 +262,6 @@ const App = {
           'qa': 'https://resources.jetbrains.com/storage/logos/web/aqua/aqua.svg',
           'al': 'https://resources.jetbrains.com/storage/logos/web/toolbox/toolbox.svg'
         };
-
         return iconMap[iconName] || '/images/plugin.svg';
       }
       return '/images/plugin.svg';
@@ -290,12 +271,10 @@ const App = {
       return plugin.icon || '/images/plugin.svg'
     },
 
-    // 页面跳转
     navigateTo(page) {
       Utils.navigateToPage(page)
     },
 
-    // 返回顶部
     scrollToTop() {
       window.scrollTo({
         top: 0,
@@ -303,14 +282,12 @@ const App = {
       })
     },
 
-    // 主题切换
     toggleTheme(event) {
       Utils.toggleTheme(event)
     }
   }
 }
 
-// 启动应用
 const app = createApp(App)
 app.component('SponsorComponent', SponsorComponent)
 app.mount('#app')
