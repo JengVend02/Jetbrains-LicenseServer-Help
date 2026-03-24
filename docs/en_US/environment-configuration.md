@@ -154,7 +154,7 @@ The main configuration file for the project is `src/main/resources/application.y
 ```yaml
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:
@@ -177,7 +177,7 @@ server:
 
 | Configuration Item | Default Value | Description |
 |-------------------|---------------|-------------|
-| `spring.application.name` | BlueSky-Jetbrains-LicenseServer-Help | Application name |
+| `spring.application.name` | Jetbrains-LicenseServer-Help | Application name |
 | `xbase64.domain` | BlueSky.cc | xbase64 domain configuration |
 | `server.port` | 10768 | Server port |
 
@@ -323,7 +323,7 @@ The project uses Spring Boot's default logging framework (Logback), and the logg
 ```yaml
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:
@@ -357,7 +357,7 @@ server:
 ```yaml
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:

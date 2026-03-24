@@ -189,7 +189,7 @@ services:
     restart: always
     environment:
       - SERVER_PORT=10768
-      - SPRING_APPLICATION_NAME=BlueSky-Jetbrains-LicenseServer-Help
+      - SPRING_APPLICATION_NAME=Jetbrains-LicenseServer-Help
 ```
 
 #### 4.3.2 构建并启动服务

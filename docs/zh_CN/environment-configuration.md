@@ -154,7 +154,7 @@ OS name: "windows 10", version: "10.0", arch: "amd64", family: "windows"
 ```yaml
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:
@@ -177,7 +177,7 @@ server:
 
 | 配置项 | 默认值 | 说明 |
 |-------|-------|------|
-| `spring.application.name` | BlueSky-Jetbrains-LicenseServer-Help | 应用名称 |
+| `spring.application.name` | Jetbrains-LicenseServer-Help | 应用名称 |
 | `xbase64.domain` | BlueSky.cc | xbase64 域名配置 |
 | `server.port` | 10768 | 服务器端口 |
 
@@ -323,7 +323,7 @@ server:
 ```yaml
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:
@@ -357,7 +357,7 @@ server:
 ```yaml
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:

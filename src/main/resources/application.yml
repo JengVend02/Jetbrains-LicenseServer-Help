@@ -1,6 +1,6 @@
 spring:
   application:
-    name: BlueSky-Jetbrains-LicenseServer-Help
+    name: Jetbrains-LicenseServer-Help
 xbase64:
   domain: BlueSky.cc
 server:

@@ -5,7 +5,7 @@ services:
     build:
       context: . # 指定 Dockerfile 所在目录
       dockerfile: Dockerfile # 显式指定 Dockerfile 文件名
-    image: bluesky-jetbrains-licenseserver-help:latest
+    image: zyp-jetbrains-licenseserver-help:latest
     container_name: Jetbrains-LicenseServer-Help
     restart: always # 容器异常退出时自动重启
     environment:

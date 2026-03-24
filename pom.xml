@@ -13,7 +13,7 @@
     </parent>
 
     <!-- 项目基本信息 -->
-    <groupId>com.bluesky</groupId>
+    <groupId>com.zyp</groupId>
     <artifactId>Jetbrains-LicenseServer-Help</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
@@ -121,7 +121,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.bluesky.jetbrainslicenseserverhelp.JetbrainsLicenseServerHelpApplication</mainClass>
+                    <mainClass>com.zyp.jetbrainslicenseserverhelp.JetbrainsLicenseServerHelpApplication</mainClass>
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
