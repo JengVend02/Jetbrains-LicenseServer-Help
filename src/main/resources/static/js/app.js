@@ -32,7 +32,8 @@ const App = {
         { id: 'home', name: '首页', icon: 'fas fa-home' },
         { id: 'products', name: '产品', icon: 'fas fa-cube' },
         { id: 'plugins', name: '插件', icon: 'fas fa-puzzle-piece' },
-        { id: 'jrebel', name: 'JRebel', icon: 'fas fa-fire' }
+        // { id: 'jrebel', name: 'JRebel', icon: 'fas fa-fire' },
+        // { id: 'sponsor', name: '赞助', icon: 'fas fa-heart' }
       ],
       showBackToTop: false
     }

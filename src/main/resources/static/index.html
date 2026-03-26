@@ -245,7 +245,7 @@
             </div>
 
             <!-- 服务器激活 -->
-            <div class="home-section bg-white rounded-2xl p-6 md:p-8 shadow-lg card-hover">
+            <!--<div class="home-section bg-white rounded-2xl p-6 md:p-8 shadow-lg card-hover">
               <div class="text-center mb-6">
                 <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
                   <i class="fas fa-server text-white text-2xl"></i>
@@ -284,11 +284,56 @@
                   </div>
                 </div>
               </div>
+            </div>-->
+            <!-- JRebel 专属激活(20260326新增) -->
+            <div class="home-section bg-white rounded-2xl p-6 md:p-8 shadow-lg card-hover">
+              <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <i class="fas fa-server text-white text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-bold text-gray-900 mb-2">JRebel 专属激活</h3>
+                <p class="text-gray-600 text-sm md:text-base">JRebel 仅支持服务器激活模式</p>
+              </div>
+
+              <div class="space-y-4">
+                <div class="flex items-start space-x-3">
+                  <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-purple-600 text-sm font-bold">1</span>
+                  </div>
+                  <p class="text-gray-700 text-sm md:text-base">打开 JRebel 激活界面</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-purple-600 text-sm font-bold">2</span>
+                  </div>
+                  <p class="text-gray-700 text-sm md:text-base">输入服务器地址</p>
+                </div>
+                <div class="flex items-start space-x-3">
+                  <div class="w-6 h-6 bg-purple-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                    <span class="text-purple-600 text-sm font-bold">3</span>
+                  </div>
+                  <p class="text-gray-700 text-sm md:text-base">完成激活</p>
+                </div>
+              </div>
+              <div class="mt-6">
+                <div class="bg-gray-50 rounded-lg p-4 mb-4">
+                  <p class="text-sm text-gray-600 mb-2">JRebel 服务器地址：</p>
+                  <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                    <input :value="jrebelServerUrl" readonly class="flex-1 bg-white border border-gray-300 rounded-lg px-3 py-2 text-sm min-w-0" />
+                    <button @click="copyToClipboard(jrebelServerUrl)" class="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition-colors whitespace-nowrap">
+                      <i class="fas fa-copy mr-2"></i>复制
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
+
+
+
           </div>
 
           <!-- JRebel 特殊说明 -->
-          <div class="home-section bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl p-6 md:p-8 text-white">
+          <!--<div class="home-section bg-gradient-to-r from-orange-400 to-red-500 rounded-2xl p-6 md:p-8 text-white">
             <div class="flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-4 mb-4">
               <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center flex-shrink-0">
                 <i class="fas fa-fire text-2xl"></i>
@@ -301,7 +346,7 @@
             <button @click="navigateTo('jrebel')" class="w-full bg-white text-orange-600 py-3 px-6 rounded-lg font-medium hover:bg-gray-50 transition-colors">
               <i class="fas fa-arrow-right mr-2"></i>前往 JRebel 激活
             </button>
-          </div>
+          </div>-->
         </div>
 
         <!-- 产品页面 -->
