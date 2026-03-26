@@ -95,6 +95,8 @@ public class AgentContextHolder {
     /** ja-netfilter ZIP包文件对象 */
     private static File jaNetfilterZipFile;
 
+    /** POWER配置文件内容 */
+    private static volatile String POWER_CONF_STR = null;
     // ==================== 核心方法 ====================
 
     public static void init() {
@@ -123,14 +125,22 @@ public class AgentContextHolder {
      * @return power.conf 文件内容
      */
     public static String getPowerConfContent() {
-        File powerConfFile = FileTools.getFileOrCreat(POWER_CONF_FILE_NAME);
-        String powerConfStr;
-        try {
-            powerConfStr = IoUtil.readUtf8(FileUtil.getInputStream(powerConfFile));
-        } catch (IORuntimeException e) {
-            throw new IllegalArgumentException(CharSequenceUtil.format("{} 文件读取失败!", POWER_CONF_FILE_NAME), e);
+        // 第一重检查：如果不为空，直接返回，不走锁，保证性能
+        if (CharSequenceUtil.isBlank(POWER_CONF_STR)) {
+            synchronized (AgentContextHolder.class) {
+                // 第二重检查：进入锁后再次判空，防止排队等待的线程再次读取 IO
+                if (CharSequenceUtil.isBlank(POWER_CONF_STR)) {
+                    File powerConfFile = FileTools.getFileOrCreat(POWER_CONF_FILE_NAME);
+                    try {
+                        log.info("从文件加载配置缓存...");
+                        POWER_CONF_STR = IoUtil.readUtf8(FileUtil.getInputStream(powerConfFile));
+                    } catch (IORuntimeException e) {
+                        throw new IllegalArgumentException(CharSequenceUtil.format("{} 文件读取失败!", POWER_CONF_FILE_NAME), e);
+                    }
+                }
+            }
         }
-        return powerConfStr;
+        return POWER_CONF_STR;
     }
 
     private static void unzipJaNetfilter() {
@@ -196,7 +206,8 @@ public class AgentContextHolder {
 
 
     private static String generatePowerConfigStr(String ruleValue) {
-        return CharSequenceUtil.builder("[Result]", "\n", ruleValue).toString();
+        POWER_CONF_STR = CharSequenceUtil.builder("[Result]", "\n", ruleValue).toString();
+        return POWER_CONF_STR;
     }
 
     private static void overridePowerConfFileContent(String configStr) {

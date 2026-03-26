@@ -303,7 +303,7 @@ public class CertificateContextHolder {
             KeyPair keyPair4096 = generateRSAKeyPair(4096);
 
             // 保存密钥对到文件
-            saveKeyPairToFiles(keyPair4096, PRIVATE_KEY_FILE_NAME, PUBLIC_KEY_FILE_NAME);
+            saveKeyPairToFiles(keyPair4096);
 
             // 生成证书
             log.debug("正在生成X.509证书...");
@@ -336,26 +336,24 @@ public class CertificateContextHolder {
     /**
      * 将密钥对保存到指定的文件中
      *
-     * @param keyPair     要保存的密钥对
-     * @param privateKeyPath 私钥文件路径
-     * @param publicKeyPath  公钥文件路径
+     * @param keyPair 要保存的密钥对
      */
-    private static void saveKeyPairToFiles(KeyPair keyPair, String privateKeyPath, String publicKeyPath) {
+    private static void saveKeyPairToFiles(KeyPair keyPair) {
         try {
             // 保存私钥
-            File privateKeyFileObj = FileTools.getFileOrCreat(privateKeyPath);
+            File privateKeyFileObj = FileTools.getFileOrCreat(PRIVATE_KEY_FILE_NAME);
             PemUtil.writePemObject("PRIVATE KEY", keyPair.getPrivate().getEncoded(),
                 FileUtil.getWriter(privateKeyFileObj, StandardCharsets.UTF_8, false));
 
             // 保存公钥
-            File publicKeyFileObj = FileTools.getFileOrCreat(publicKeyPath);
+            File publicKeyFileObj = FileTools.getFileOrCreat(PUBLIC_KEY_FILE_NAME);
             PemUtil.writePemObject("PUBLIC KEY", keyPair.getPublic().getEncoded(),
                 FileUtil.getWriter(publicKeyFileObj, StandardCharsets.UTF_8, false));
 
             publicKeyFile = publicKeyFileObj;
             privateKeyFile = privateKeyFileObj;
 
-            log.debug("密钥对已保存: {} 和 {}", privateKeyPath, publicKeyPath);
+            log.debug("密钥对已保存: {} 和 {}", PRIVATE_KEY_FILE_NAME, PUBLIC_KEY_FILE_NAME);
 
         } catch (Exception e) {
             throw new RuntimeException("密钥对文件保存失败", e);
