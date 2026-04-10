@@ -242,6 +242,11 @@ const ApiService = {
     return await this.get('/api/plugins')
   },
 
+  // 获取插件更新时间
+  async getPluginUpdateTime() {
+    return await this.get('/api/plugins/lastUpdateTime')
+  },
+
   // 生成产品激活码
   async generateLicense(productCode, licenseeName, assigneeName, expiryDate) {
     const params = new URLSearchParams({

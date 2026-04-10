@@ -28,6 +28,7 @@ const App = {
       filteredProducts: [],
       filteredPlugins: [],
       searchQuery: '',
+      pluginUpdateTime: '',  // 插件更新时间
       navItems: [
         { id: 'home', name: '首页', icon: 'fas fa-home' },
         { id: 'products', name: '产品', icon: 'fas fa-cube' },
@@ -66,6 +67,7 @@ const App = {
     this.loadConfig()
     this.loadProducts()
     this.loadPlugins()
+    this.loadPluginUpdateTime()
     this.setDefaultExpiryDate()
     Utils.loadTheme()
 
@@ -132,6 +134,15 @@ const App = {
       } catch (error) {
         console.error('加载插件列表失败:', error)
         Utils.showNotification('加载插件列表失败', 'error')
+      }
+    },
+
+    async loadPluginUpdateTime() {
+      try {
+        const data = await ApiService.getPluginUpdateTime()
+        this.pluginUpdateTime = data.lastUpdateTime || ''
+      } catch (error) {
+        console.error('加载插件更新时间失败:', error)
       }
     },
 

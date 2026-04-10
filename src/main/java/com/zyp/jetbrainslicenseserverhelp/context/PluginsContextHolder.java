@@ -53,6 +53,9 @@ public class PluginsContextHolder {
     /** 线程池，用于并发请求插件数据 */
     private static ExecutorService executorService;
 
+    /** 最后一次更新时间 */
+    private static String lastUpdateTime;
+
     // ==================== 核心方法 ====================
 
     /**
@@ -87,6 +90,15 @@ public class PluginsContextHolder {
      */
     public static List<PluginCache> pluginCacheList() {
         return pluginCacheList;
+    }
+
+    /**
+     * 获取最后一次更新时间
+     *
+     * @return 更新时间字符串，格式为 yyyy-MM-dd HH:mm:ss，如果未更新过则返回null
+     */
+    public static String getLastUpdateTime() {
+        return lastUpdateTime;
     }
 
     /**
@@ -155,7 +167,10 @@ public class PluginsContextHolder {
         // 保存到文件
         PluginCacheService.saveToCache(pluginCacheList);
 
-        log.info("插件缓存已更新，当前总数: {}", pluginCacheList.size());
+        // 记录更新时间
+        lastUpdateTime = java.time.LocalDateTime.now()
+            .format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        log.info("插件缓存已更新，当前总数: {}, 更新时间: {}", pluginCacheList.size(), lastUpdateTime);
     }
 
     /**

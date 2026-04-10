@@ -128,6 +128,35 @@ public class DataController {
     }
 
     /**
+     * 获取插件列表最后更新时间
+     *
+     * <p>返回插件信息缓存的最后一次更新时间，
+     * 用于前端展示数据的新鲜度。
+     *
+     * <p>请求示例：
+     * <pre>
+     * GET /api/plugins/lastUpdateTime
+     * </pre>
+     *
+     * <p>响应示例：
+     * <pre>
+     * {
+     *   "lastUpdateTime": "2024-01-15 12:00:00"
+     * }
+     * </pre>
+     *
+     * @return 包含更新时间的JSON对象
+     */
+    @GetMapping("/plugins/lastUpdateTime")
+    public java.util.Map<String, String> getPluginLastUpdateTime() {
+        String updateTime = PluginsContextHolder.getLastUpdateTime();
+        java.util.Map<String, String> result = new java.util.HashMap<>();
+        result.put("lastUpdateTime", updateTime != null ? updateTime : "尚未更新");
+        log.debug("获取插件更新时间: {}", result.get("lastUpdateTime"));
+        return result;
+    }
+
+    /**
      * 生成JetBrains产品激活码
      *
      * @param productCode 产品代码
